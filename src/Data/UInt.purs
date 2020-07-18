@@ -37,7 +37,6 @@ import Data.Bounded (class Bounded, top, bottom)
 import Data.Show (class Show)
 import Data.Function ((<<<))
 import Data.Semigroup ((<>))
-import Data.Generic.Rep (class Generic, Constructor (..), Argument (..))
 import Data.Enum (class Enum)
 import Test.QuickCheck (class Arbitrary, arbitrary)
 import Prelude ((<$>), (<), (>), (+), (-))
@@ -48,10 +47,6 @@ foreign import data UInt :: Type
 
 foreign import exact :: forall a b. (b -> Maybe b) -> Maybe b -> (a -> b) -> a -> Maybe b
 foreign import from :: forall a. a -> UInt
-
-instance genericUInt :: Generic UInt (Constructor "UInt" (Argument Number)) where
-  from x = Constructor (Argument (toNumber x))
-  to (Constructor (Argument x)) = fromNumber x
 
 instance arbitraryUInt :: Arbitrary UInt where
   arbitrary = fromInt <$> arbitrary
